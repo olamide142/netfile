@@ -1,0 +1,43 @@
+<div class="item">
+    <p class="w3-center w3-large" >{{user}}</p>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if request.user == user %}
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                <input type="file" class="custom-file-input" name="file" id="file" onchange="fileData()">
+                <input type="hidden" name="filesize" id="filesize">
+                <input type="hidden" name="file_extension" id="file_extension">
+                <input type="hidden" name="file_name" id="file_name">
+                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="upload-file" id="file_label">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-secondary" id="upload-file" style="cursor: pointer;">Upload</button>
+                </div>
+            </div>
+        {% endif %}
+
+    </form>
+    <div class="w3-border w3-padding" style="overflow-y: scroll; max-height: 80vh; overflow: auto;">
+
+        {% for file in files %}
+            {% if file.file_owner is user %}
+                <div id="" class="w3-card w3-panel w3-round w3-padding">
+                    <p class="w3-text-grey">Name: <span class="w3-text-black">{{file_name}}</span></p>
+                    <p class="w3-text-grey">Type: <span class="w3-text-black">{{file_type}}</span></p>
+                    <p class="w3-text-grey">Size: <span class="w3-text-black">{{file_size}}</span></p>
+                    <div class="btn-group" role="group" aria-label="e">
+                        <button type="button" class="w3-button w3-tiny rounded-left w3-green">Download</button>
+                        <button type="button" class="w3-button w3-tiny rounded-right w3-light-grey">Remove</button>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+</div>
+
+<script>
+    
+</script>

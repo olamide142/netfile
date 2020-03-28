@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net File</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/w3.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/index.css' %}">
+    <script src="{% static 'app/bootstrap.min.js' %}"></script>
+    <script src="{% static 'app/jquery.min.js' %}"></script>
+    <script src="{% static 'app/vue.js' %}"></script>
+    <script src="{% static 'app/index.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="{% url 'index' %}">Net File</a>
+    </nav>
+  
+
+    <main role="main" class="container" >
+        <div class="jumbotron" id="home">
+            <h1 class="h3 mb-3 font-weight-normal w3-center">Share Files on the Network</h1>
+            <div class="">
+                {% if not request.user.is_authenticated %}
+                <form class="form-signin" method="POST" action="{% url 'join' %}">
+                    {% csrf_token %}
+                    <input type="text" name="username" class="w3-padding w3-margin form-control" placeholder="Username" required autofocus>
+                    <button class="w3-button w3-blue w3-right w3-round" type="submit">Join</button>
+                </form>
+                {% else %}
+                    <a href="{% url 'logout' %}" class="w3-button w3-right w3-blue w3-round">Log Out</a>
+                    <div class="alert alert-primary" role="alert" style="width: 200px;">
+                        User :  {{ request.user }}</b>
+                    </div>
+                {% endif %}
+                
+            </div>
+          </div>
+                    
+
+            <section class="horizontal-scroll">
+                {% for user in users %}
+                    {% include 'app/block.html' %}
+                {% endfor %}
+            </section>
+            
+            
+
+
+  
+      </main>
+
+</body>
+</html>
