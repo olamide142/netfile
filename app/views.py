@@ -18,7 +18,11 @@ def join(request):
 
     if user is not None:
         login(request, user)
-        context = {'form':form}
+
+        files = File.objects.all()
+        users = User.objects.all()
+        context = {'form':form, 'files':files, 'users':users}
+
         return render(request, 'app/index.html', context)
     else:
         # Creating a user cause i was too lazy to look into sessions
@@ -29,9 +33,12 @@ def join(request):
         os.mkdir('static/upload/'+str(folder))
         login(request, user)
 
-        context = {'form':form}
+        files = File.objects.all()
+        users = User.objects.all()
+        context = {'form':form, 'files':files, 'users':users}
 
         return render(request, 'app/index.html', context)
+
 
 
 
@@ -84,7 +91,10 @@ def handle_uploaded_file(request, f):
 
 
 def logout_view(request):
-    form = UploadFileForm()
     logout(request)
-    return render(request, 'app/index.html', {'form':form})
+    form = UploadFileForm()
+    files = File.objects.all()
+    users = User.objects.all()
+    context = {'form':form, 'files':files, 'users':users}
 
+    return render(request, 'app/index.html', context)
