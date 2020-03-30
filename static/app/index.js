@@ -44,7 +44,7 @@ function fileData(){
     document.getElementById('file_extension').value = extension[extension.length-1];
 
     extension.pop();
-    document.getElementById('file_name').value = extension.join(".");
+    document.getElementById('file_name').value = extension.join(".").replace("C:\\fakepath\\",'');
     document.getElementById('file_label').textContent = extension.join(".").replace("C:\\fakepath\\",'');
 
     // Get file size 

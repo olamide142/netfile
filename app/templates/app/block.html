@@ -1,5 +1,4 @@
-<div class="item">
-    <p class="w3-center w3-large" >{{user}}</p>
+    <p class="d-flex justify-content-center">{{user}}</p>
     <form action="/" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -21,12 +20,12 @@
     </form>
     <div class="w3-border w3-padding" style="overflow-y: scroll; max-height: 80vh; overflow: auto;">
 
-        {% for file in files %}
-            {% if file.file_owner is user %}
+        {% for file in files reversed %}
+            {% if user|safe == file.file_owner|safe %}
                 <div id="" class="w3-card w3-panel w3-round w3-padding">
-                    <p class="w3-text-grey">Name: <span class="w3-text-black">{{file_name}}</span></p>
-                    <p class="w3-text-grey">Type: <span class="w3-text-black">{{file_type}}</span></p>
-                    <p class="w3-text-grey">Size: <span class="w3-text-black">{{file_size}}</span></p>
+                    <p class="w3-text-black w3-small">Name: <span class="w3-text-grey">{{file.file_name|wordwrap:5}}</span></p>
+                    <p class="w3-text-black w3-small">Type: <span class="w3-text-grey">{{file.file_type}}</span></p>
+                    <p class="w3-text-black w3-small">Size: <span class="w3-text-grey">{{file.file_size}}</span></p>
                     <div class="btn-group" role="group" aria-label="e">
                         <button type="button" class="w3-button w3-tiny rounded-left w3-green">Download</button>
                         <button type="button" class="w3-button w3-tiny rounded-right w3-light-grey">Remove</button>
@@ -36,7 +35,7 @@
         {% endfor %}
         
     </div>
-</div>
+
 
 <script>
     

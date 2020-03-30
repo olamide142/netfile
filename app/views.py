@@ -51,14 +51,14 @@ def index(request):
 
         if form.is_valid():
 
-            file_owner = request.user
+            file_owner = str(request.user)
             file_size = request.POST.get('filesize')
             file_ext = request.POST.get('file_extension')
             file_name = request.POST.get('file_name')
 
             file_ = File.objects.create(
                 file_owner=file_owner, 
-                file_name=request.FILES['file'].name,
+                file_name=file_name,
                 file_ext=file_ext,
                 file_size=file_size)
             file_.save()
@@ -66,7 +66,11 @@ def index(request):
             upload_file = request.FILES['file']
             handle_uploaded_file(request, upload_file)
             
-            return render(request, 'app/index.html')
+            files = File.objects.all()
+            users = User.objects.all()
+            context = {'form':form, 'files':files, 'users':users}
+            return render(request, 'app/index.html', context)
+
 
         else:
             return HttpResponse("ERROR, \nSomething went wrong")
@@ -74,7 +78,6 @@ def index(request):
     else:
         files = File.objects.all()
         users = User.objects.all()
-        # return HttpResponse(users)
         context = {'form':form, 'files':files, 'users':users}
         return render(request, 'app/index.html', context)
 

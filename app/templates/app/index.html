@@ -40,13 +40,17 @@
             </div>
           </div>
                     
-
+            
+            
+            
             <section class="horizontal-scroll">
                 {% for user in users %}
-                    {% include 'app/block.html' %}
+                    <div class="item">
+                        {% include 'app/block.html' %}
+                    </div>
                 {% endfor %}
             </section>
-            
+           
             
 
 
