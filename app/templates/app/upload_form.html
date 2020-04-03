@@ -1,0 +1,62 @@
+<form method="POST" action="{% url 'upload' %}" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {% if request.user == user %}
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="hidden" name="file_size" id="file_size">
+                <input type="hidden" name="file_extension" id="file_extension">
+                <input type="hidden" name="file_name" id="file_name">
+            <input type="file" class="custom-file-input" name="file" id="file" onchange="fileData()">
+            <label class="custom-file-label" for="inputGroupFile02" aria-describedby="upload-file" id="file_label">Choose file</label>
+            </div>
+            <div class="input-group-append">
+            <button type="buttton" class="btn btn-outline-secondary" id="upload-file" style="cursor: pointer;" onclick="upload()">Upload</button>
+            </div>
+        </div>
+    {% endif %}
+
+    </form>
+
+<!-- 
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    
+
+function upload(){
+    var file_size = FSIZE;
+    var file_extension = EXTENSION;
+    var file_name = FILENAME;
+    f = FILE;
+    
+
+    $.ajax({
+        url: "{% url 'upload' %}",
+        method: 'POST',
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        data : {'file_size':file_size, 'file_extension':file_extension, 'file_name':file_name, 'f':f.item(0)},
+        success: function (data) {
+            console.log(data.file_id);
+        },
+        error: function (error) {
+            alert("Error");
+        }
+    });
+} 
+
+</script> -->

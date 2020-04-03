@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/index.css' %}">
     <script src="{% static 'app/bootstrap.min.js' %}"></script>
     <script src="{% static 'app/jquery.min.js' %}"></script>
-    <script src="{% static 'app/vue.js' %}"></script>
+    <!-- <script src="{% static 'app/vue.js' %}"></script> -->
     <script src="{% static 'app/index.js' %}"></script>
 </head>
 <body>
@@ -32,20 +32,33 @@
                 </form>
                 {% else %}
                     <a href="{% url 'logout' %}" class="w3-button w3-right w3-blue w3-round">Log Out</a>
-                    <div class="alert alert-primary" role="alert" style="width: 200px;">
-                        User :  {{ request.user }}</b>
+                    <div class="alert alert-primary" role="alert" style="width: 300px;">
+                        User :  {{ request.user }}</b><br>
+                        Uploads : {{logged_in|length}}
+                    </div>
+                    <div class="w3-left w3-small" style="max-width: 400px;">
+                        {% include 'app/upload_form.html' %}
                     </div>
                 {% endif %}
                 
             </div>
+                
+            <div class="alert alert-success w3-right" role="alert" id="downloading" style="width: 300px; display: none;">
+                Download will begin in a few seconds
+            </div>
+            <div class="alert alert-success w3-right" role="alert" id="uploading" style="width: 300px; display: none;">
+                File Uploading...
+            </div>
           </div>
                     
             
+
             
-            
+
+
             <section class="horizontal-scroll">
                 {% for user in users %}
-                    <div class="item">
+                    <div class="item w3-padding w3-margin" >
                         {% include 'app/block.html' %}
                     </div>
                 {% endfor %}

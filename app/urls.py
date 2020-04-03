@@ -5,8 +5,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('upload/', views.upload, name="upload"),
     path('join/', views.join, name="join"),
-    path('logout/', views.logout_view, name="logout")
+    path('logout/', views.logout_view, name="logout"),
+    path('delete/', views.delete_file, name="delete"),
+    path('download/', views.download_file, name="download")
 ]
 
 

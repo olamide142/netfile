@@ -1,36 +1,32 @@
-    <p class="d-flex justify-content-center">{{user}}</p>
-    <form action="/" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+{% load custom_filter %}
+<p class="item w3-padding w3-center">{{user}}</p>  
 
-        {% if request.user == user %}
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                <input type="file" class="custom-file-input" name="file" id="file" onchange="fileData()">
-                <input type="hidden" name="filesize" id="filesize">
-                <input type="hidden" name="file_extension" id="file_extension">
-                <input type="hidden" name="file_name" id="file_name">
-                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="upload-file" id="file_label">Choose file</label>
-                </div>
-                <div class="input-group-append">
-                <button type="submit" class="btn btn-outline-secondary" id="upload-file" style="cursor: pointer;">Upload</button>
-                </div>
-            </div>
-        {% endif %}
-
-    </form>
     <div class="w3-border w3-padding" style="overflow-y: scroll; max-height: 80vh; overflow: auto;">
 
         {% for file in files reversed %}
             {% if user|safe == file.file_owner|safe %}
-                <div id="" class="w3-card w3-panel w3-round w3-padding">
-                    <p class="w3-text-black w3-small">Name: <span class="w3-text-grey">{{file.file_name|wordwrap:5}}</span></p>
-                    <p class="w3-text-black w3-small">Type: <span class="w3-text-grey">{{file.file_type}}</span></p>
-                    <p class="w3-text-black w3-small">Size: <span class="w3-text-grey">{{file.file_size}}</span></p>
+                <div  class="w3-card w3-panel w3-round w3-padding">
+                    <p class="w3-text-black w3-small">Name: <span class="w3-text-grey">{{file.file_name|smlr}}</span></p>
+                    <p class="w3-text-black w3-small">Type: <span class="w3-text-grey">{{file.file_ext}}</span></p>
+                    <p class="w3-text-black w3-small">Size: <span class="w3-text-grey">{{file.file_size|tobyte}}</span></p>
                     <div class="btn-group" role="group" aria-label="e">
-                        <button type="button" class="w3-button w3-tiny rounded-left w3-green">Download</button>
-                        <button type="button" class="w3-button w3-tiny rounded-right w3-light-grey">Remove</button>
+                        <form action="/download/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden"  value="{{file.file_id|safe}}" name="x">
+                            <button class="w3-button w3-tiny rounded-left w3-green" type="submit" id="download_btn">Download</button>
+                        </form>
+
+                        {% if request.user|safe == file.file_owner|safe %}
+                            <form action="/delete/" method="post">
+                                {% csrf_token %}
+                                <input type="hidden"  value="{{file.file_id|safe}}" name="xx">
+                                <button type="submit" class="w3-button w3-tiny rounded-right w3-light-grey" id="remove_btn">Remove</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
+            {%else%}
+            
             {% endif %}
         {% endfor %}
         
@@ -38,5 +34,6 @@
 
 
 <script>
-    
+
+
 </script>
