@@ -9,7 +9,7 @@ Run app of private network:
 2. run : python manage.py runserver 0.0.0.0:8000
 
 3. Open browser 
-    goto: 192.168.8.102:8000
+    goto: <host_machine_ip_address>:8000
 
 4. Join Netfile by inputing your username
 
